@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Front Desk – Help</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Verdana, Geneva, sans-serif; background: #fff; color: #333; overflow-x: hidden; }
+button, input, select { font-family: inherit; }
+svg { display: block; flex-shrink: 0; }
+
+/* ===== Background page (same layout as current screen) ===== */
+.topbar { height: 78px; margin-top: 6px; background: #1c68a8; position: relative; color: #cfe0ee; font-family: Poppins, sans-serif; }
+.prop { position: absolute; left: 241px; top: 9px; }
+.prop label { display: block; font-size: 17px; opacity: .65; margin: 0 0 3px 5px; }
+.prop select { width: 244px; height: 33px; background: #1c68a8; color: #fff; border: 1px solid #c9a56a; border-radius: 6px; padding: 0 8px; font-size: 14px; }
+.top-right { position: absolute; right: 300px; top: 0; height: 78px; display: flex; align-items: center; gap: 28px; font-size: 20px; }
+.top-right button { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 7px; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; background: #0d3f69; display: grid; place-items: center; font-weight: 600; }
+.nav { height: 59px; display: flex; align-items: center; gap: 36px; padding-left: 257px; font-size: 17px; color: #555; border-bottom: 1px solid #ddd; }
+.toolbar { height: 52px; display: flex; align-items: center; gap: 6px; }
+.toolbar button { height: 28px; padding: 0 9px; background: #17486f; color: #fff; border: 0; border-radius: 5px; font-size: 11.5px; }
+.toolbar select { margin-left: auto; margin-right: 48px; width: 218px; height: 32px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; padding: 0 8px; }
+
+.chart { width: calc(100% - 20px); font-family: "Times New Roman", serif; font-size: 14px; }
+.row { display: grid; grid-template-columns: 117px 1fr; border-bottom: 1px solid #e2e2e2; height: 33px; }
+.label { display: flex; align-items: center; justify-content: center; border-right: 1px solid #ccd; }
+.cells { position: relative; display: grid; grid-template-columns: repeat(15, 1fr); }
+.cells > span { border-right: 1px solid #e2e2e2; display: flex; align-items: center; justify-content: center; }
+.row.head { height: 42px; font-family: Verdana, sans-serif; font-size: 13px; }
+.row.total { height: 26px; font-family: Verdana, sans-serif; font-size: 13px; }
+.row.total .label, .row.total .cells > span { background: #1d4f7c; color: #fff; }
+.row.type .label, .row.type .cells > span { background: #eef0f3; }
+.bk { position: absolute; top: 3px; height: 28px; font: 11px Verdana, sans-serif; white-space: nowrap; overflow: hidden; }
+.bk b { color: #1d5d9b; }
+.bk::after { content: ""; position: absolute; left: 0; right: 0; bottom: 1px; height: 10px; border-radius: 6px; background: var(--c); }
+
+/* ===== Redesigned Help modal (all classes prefixed hp-) ===== */
+.hp-overlay { position: fixed; inset: 0; background: rgba(15, 30, 48, .52); display: none; justify-content: center; align-items: flex-start; padding: 70px 16px 16px; z-index: 1000; }
+.hp-overlay.open { display: flex; }
+.hp-modal { position: relative; width: 902px; max-width: 100%; height: 775px; max-height: calc(100vh - 86px); background: #f5f8fc; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 70px rgba(8, 28, 50, .35); animation: hp-in .25s ease; color: #475569; }
+@keyframes hp-in { from { opacity: 0; transform: translateY(14px); } }
+
+.hp-header { background: linear-gradient(120deg, #17486f, #1c68a8 55%, #2387d6); color: #fff; padding: 18px 24px; }
+.hp-title-row { display: flex; align-items: center; gap: 14px; }
+.hp-badge { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,.16); display: grid; place-items: center; }
+.hp-header h2 { font: 600 20px/1.3 Poppins, sans-serif; }
+.hp-header p { font-size: 12.5px; opacity: .82; margin-top: 2px; }
+.hp-x { margin-left: auto; width: 36px; height: 36px; border: 0; border-radius: 10px; background: rgba(255,255,255,.12); color: #fff; cursor: pointer; display: grid; place-items: center; }
+.hp-x:hover { background: rgba(255,255,255,.26); }
+.hp-search { margin-top: 15px; display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 10px; padding: 0 14px; height: 42px; color: #7b8aa0; }
+.hp-search:focus-within { box-shadow: 0 0 0 3px rgba(255,255,255,.4); }
+.hp-search input { flex: 1; border: 0; outline: 0; font-size: 13.5px; color: #1e293b; background: none; }
+
+.hp-body { flex: 1; overflow-y: auto; padding: 18px 24px; scrollbar-width: thin; scrollbar-color: #b8c6d8 transparent; }
+.hp-card { background: #fff; border: 1px solid #e3eaf3; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; transition: box-shadow .2s, border-color .2s; }
+.hp-card:hover { border-color: #bcd8f2; box-shadow: 0 8px 24px rgba(28, 104, 168, .10); }
+.hp-card:last-of-type { margin-bottom: 0; }
+.hp-card-top { display: grid; grid-template-columns: 1fr 168px; gap: 18px; align-items: center; }
+.hp-tag { display: inline-block; font-size: 10px; font-weight: bold; letter-spacing: .06em; text-transform: uppercase; color: #1c68a8; background: #e8f3fd; padding: 3px 9px; border-radius: 20px; margin-bottom: 6px; }
+.hp-card h3 { font: 600 15px/1.45 Poppins, sans-serif; color: #12304d; margin-bottom: 4px; }
+.hp-card p { font-size: 12.5px; line-height: 1.7; }
+.hp-card strong { color: #1e3a56; }
+
+/* Description shows as a 2-line preview until the card is expanded */
+.hp-desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.hp-card.expanded .hp-desc { display: block; }
+.hp-more { display: block; padding: 0; border: 0; background: none; color: #1e88e5; font-size: 12px; font-weight: bold; cursor: pointer; }
+.hp-photos { display: none; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #dbe4ef; }
+.hp-card.expanded .hp-photos:not(:empty) { display: grid; }
+.hp-photos img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; border: 1px solid #e3eaf3; display: block; }
+.hp-desc:empty { display: none; }
+
+/* Small video thumbnail */
+.hp-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 10px; overflow: hidden; cursor: pointer; background: linear-gradient(135deg, #1d4f7c, #2a8fdc); }
+.hp-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hp-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 38px; height: 38px; border-radius: 50%; background: #fff; color: #1c68a8; display: grid; place-items: center; box-shadow: 0 4px 14px rgba(0,0,0,.3); transition: transform .2s; }
+.hp-thumb:hover .hp-play { transform: translate(-50%, -50%) scale(1.12); }
+
+/* Large player that opens over the help list */
+.hp-player { position: absolute; inset: 0; z-index: 5; display: none; flex-direction: column; justify-content: center; padding: 24px; background: rgba(10, 24, 40, .94); color: #fff; }
+.hp-player.open { display: flex; }
+.hp-player-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.hp-player-head h3 { font: 500 15px/1.45 Poppins, sans-serif; }
+.hp-screen { width: 100%; aspect-ratio: 16 / 9; min-height: 0; border-radius: 10px; overflow: hidden; background: #000; display: grid; place-items: center; font-size: 13px; }
+.hp-screen iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* Expanded guide, written-guide tile and card links */
+.hp-extra { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #dbe4ef; font-size: 12.5px; line-height: 1.7; }
+.hp-card.expanded .hp-extra { display: block; }
+.hp-extra p { margin-bottom: 10px; }
+.hp-extra h4 { font: 600 13px Poppins, sans-serif; color: #12304d; margin-bottom: 6px; }
+.hp-extra ul { padding-left: 18px; }
+.hp-extra li { margin-bottom: 5px; }
+.hp-extra .callout { margin-top: 10px; padding: 10px 13px; background: #eef6fe; border-left: 3px solid #1e88e5; border-radius: 0 8px 8px 0; }
+.hp-doc { aspect-ratio: 16 / 9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 1px dashed #bcd8f2; border-radius: 10px; background: #f4f9fe; color: #1c68a8; font-size: 11.5px; font-weight: bold; text-decoration: none; }
+.hp-actions { display: flex; gap: 18px; align-items: center; margin-top: 8px; font-size: 12px; }
+.hp-actions a { color: #64748b; text-decoration: none; }
+.hp-actions a:hover { color: #1c68a8; text-decoration: underline; }
+.hp-yt { align-self: flex-start; margin-top: 12px; color: #9fd0ff; font-size: 12.5px; }
+.hp-all { margin-left: auto; color: #1c68a8; font-weight: bold; text-decoration: none; }
+
+.hp-empty { display: none; text-align: center; padding: 60px 20px; font-size: 13.5px; }
+
+.hp-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 24px; background: #fff; border-top: 1px solid #e3eaf3; font-size: 12px; color: #7b8aa0; }
+.hp-close { padding: 10px 28px; border: 0; border-radius: 9px; background: #1c68a8; color: #fff; font-size: 12.5px; cursor: pointer; }
+.hp-close:hover { background: #17486f; }
+.hp-modal :focus-visible { outline: 3px solid #f5b942; outline-offset: 2px; }
+
+@media (max-width: 700px) {
+  .hp-overlay { padding: 12px; }
+  .hp-modal { height: auto; max-height: calc(100vh - 24px); }
+  .hp-photos { grid-template-columns: 1fr 1fr; }
+  .hp-card { padding: 12px; }
+  .hp-card-top { grid-template-columns: 1fr 104px; gap: 12px; }
+  .hp-play { width: 30px; height: 30px; }
+  .hp-player { padding: 12px; }
+  .hp-body { padding: 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="prop">
+    <label for="property">Select Property</label>
+    <select id="property"><option>Pali, Hotel Pali [ID: 15157]</option></select>
+  </div>
+  <div class="top-right">
+    <span>A文</span>
+    <button id="openHelp">❔ Help</button>
+    <span>🔍 Admin</span>
+    <span class="avatar">e</span>
+  </div>
+</header>
+<nav class="nav"><span>⏱ Dashboard</span><span>⋲ Manage</span></nav>
+<div class="toolbar">
+  <button>Sync Inventory from Front Desk</button><button>Room Service Request</button><button>Day Notes</button><button>Audit</button>
+  <select aria-label="Room tag filter"><option>No Room Tag Filter...</option></select>
+</div>
+<div class="chart" id="chart"></div>
+
+<!-- ===== HELP MODAL ===== -->
+<div class="hp-overlay open" id="hpOverlay">
+  <div class="hp-modal" role="dialog" aria-modal="true" aria-labelledby="hpTitle">
+
+    <div class="hp-header">
+      <div class="hp-title-row">
+        <div class="hp-badge">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>
+        </div>
+        <div>
+          <h2 id="hpTitle">Help Center</h2>
+          <p>Guides and video tutorials for your Front Desk</p>
+        </div>
+        <button class="hp-x" data-close aria-label="Close help">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <label class="hp-search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="hpSearch" placeholder="Search help topics…" aria-label="Search help topics">
+      </label>
+    </div>
+
+    <div class="hp-body">
+      <!-- Topic cards are built from help-data.js -->
+      <div id="hpList"></div>
+
+      <div class="hp-empty" id="hpEmpty">No help topics match your search.</div>
+    </div>
+
+    <div class="hp-player" id="hpPlayer">
+      <div class="hp-player-head">
+        <h3 id="hpPlayerTitle"></h3>
+        <button class="hp-x" id="hpPlayerClose" aria-label="Close video">&#10005;</button>
+      </div>
+      <div class="hp-screen" id="hpScreen"></div>
+      <a class="hp-yt" id="hpYoutube" target="_blank" rel="noopener">Watch on YouTube &#8599;</a>
+    </div>
+
+    <div class="hp-footer">
+      <span>Press Esc to close</span>
+      <a class="hp-all" href="help-center.html">Open full Help Center &#8594;</a>
+      <button class="hp-close" data-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="help-data.js"></script>
+<script>
+/* ----- Background room chart (sample data) ----- */
+const days = ['Sun 22-Nov','Mon 23-Nov','Tue 24-Nov','Wed 25-Nov','Thu 26-Nov','Fri 27-Nov','Sat 28-Nov','Sun 29-Nov','Mon 30-Nov','Tue 01-Dec','Wed 02-Dec','Thu 03-Dec','Fri 04-Dec','Sat 05-Dec','Sun 06-Dec'];
+const spans = a => a.map(v => `<span>${v}</span>`).join('');
+const row = (cls, label, cells) => `<div class="row ${cls}"><div class="label">${label}</div><div class="cells">${cells}</div></div>`;
+const G = '#bfe3cf', B = '#cfe3f6', S = '#c3cada', Y = '#f6edb4';
+const bk = (start, len, text, color) => `<div class="bk" style="left:${start/15*100}%;width:${len/15*100}%;--c:${color}">${text}</div>`;
+const maint = bk(12, 2, '🛠 Maintainence', Y);
+const block = bk(0, 1.5, '🛠 Block rooms', Y) + bk(2.5, 1.5, '🛠 Block rooms', Y);
+const rooms = {
+  '101': bk(0,.5,'<b>M</b> Raj…','#17853f') + bk(.5,2,'<b>M</b> test test',S) + bk(2.5,1.5,'<b>M</b> Test Guest',G) + maint,
+  '105': bk(0,.5,'<b>M</b> Raj…',G) + bk(.5,2,'<b>M</b> test test',S) + bk(2.5,1.5,'👤 Pradeep',B) + bk(10.5,1,'deep pradeep',B) + maint,
+  '102': bk(0,.5,'<b>C</b> Dem…',G) + bk(.5,2,'<b>M</b> test test',S) + bk(10.5,1,'deep pradeep',B) + maint,
+  '104': block + bk(10.5,1,'deep pradeep',B) + maint,
+  '103': block + maint,
+  '106': block + bk(10.5,1,'deep B2B sf…',G) + maint,
+  '107-A': bk(.5,2,'<b>M</b> test test',S) + bk(2.5,1.5,'👤 Pradeep',B) + maint,
+  'STK-001': bk(.5,1,'<b>M</b> raj mathur',G)
+};
+for (let i = 2; i <= 12; i++) rooms['STK-' + String(i).padStart(3,'0')] = bk(0, i === 2 ? .5 : 1.5, '👤 .', B) + (i > 7 ? bk(2.5,3,'👤 .',B) + bk(6.5,2,'👤 .',B) : '');
+const empty = spans(Array(15).fill(''));
+document.getElementById('chart').innerHTML =
+  row('head', '📅 ‹ › ⟳', spans(days)) +
+  row('total', 'TOTAL AVL', spans([46,68,56,60,62,64,66,68,70,72,70,72,65,65,72])) +
+  row('type', '⊟ Standard Room', spans(['1/22','18/22','7/22','10/22','12/22','14/22','16/22','18/22','20/22','22/22','20/22','22/22','15/22','15/22','22/22'])) +
+  Object.entries(rooms).map(([n, b]) => row('', n, empty + b)).join('');
+
+/* ----- Help modal ----- */
+document.getElementById('hpList').innerHTML = HELP_TOPICS.map(t => `
+  <article class="hp-card">
+    <div class="hp-card-top">
+      <div>
+        <span class="hp-tag">${HELP_CATEGORIES.find(c => c.id === t.category).name}</span>
+        <h3>${t.title}</h3>
+        <div class="hp-desc">${t.intro}</div>
+      </div>
+      ${t.video
+        ? `<button class="hp-thumb" data-video="${t.video}" aria-label="Play tutorial: ${t.title}">
+             <img src="${ytThumb(t.video)}" alt="" loading="lazy" onerror="this.remove()">
+             <span class="hp-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+           </button>`
+        : `<a class="hp-doc" href="help-center.html#${t.id}">
+             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7zM14 3v4h4M9 13h6M9 17h6"/></svg>
+             Read guide
+           </a>`}
+    </div>
+    <div class="hp-extra">${t.more}</div>
+    <div class="hp-photos">${(t.photos || []).map(p => `<img src="${p.src}" alt="${p.alt}">`).join('')}</div>
+    <div class="hp-actions">
+      <button class="hp-more" aria-expanded="false">View more</button>
+      <a href="help-center.html#${t.id}">Open full guide &#8594;</a>
+    </div>
+  </article>`).join('');
+const overlay = document.getElementById('hpOverlay');
+const search = document.getElementById('hpSearch');
+const cards = [...document.querySelectorAll('.hp-card')];
+const player = document.getElementById('hpPlayer');
+const screenBox = document.getElementById('hpScreen');
+const closePlayer = () => {
+  player.classList.remove('open');
+  screenBox.innerHTML = ''; // stops the video
+};
+const closeHelp = () => {
+  closePlayer();
+  overlay.classList.remove('open');
+};
+document.getElementById('openHelp').onclick = () => overlay.classList.add('open');
+document.querySelectorAll('[data-close]').forEach(el => el.onclick = closeHelp);
+overlay.onclick = e => { if (e.target === overlay) closeHelp(); };
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; player.classList.contains('open') ? closePlayer() : closeHelp(); });
+
+search.oninput = () => {
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  cards.forEach(c => {
+    const match = c.textContent.toLowerCase().includes(q);
+    c.hidden = !match;
+    if (match) shown++;
+  });
+  document.getElementById('hpEmpty').style.display = shown ? 'none' : 'block';
+};
+
+document.querySelectorAll('.hp-thumb').forEach(btn => btn.onclick = () => {
+  const title = btn.closest('.hp-card').querySelector('h3').textContent;
+  document.getElementById('hpPlayerTitle').textContent = title;
+  document.getElementById('hpYoutube').href = ytWatch(btn.dataset.video);
+  screenBox.replaceChildren(ytFrame(btn.dataset.video, title));
+  player.classList.add('open');
+});
+document.getElementById('hpPlayerClose').onclick = closePlayer;
+
+cards.forEach(card => {
+  const more = card.querySelector('.hp-more');
+  more.onclick = () => {
+    const open = card.classList.toggle('expanded');
+    more.textContent = open ? 'View less' : 'View more';
+    more.setAttribute('aria-expanded', open);
+  };
+});
+</script>
+</body>
+</html>
