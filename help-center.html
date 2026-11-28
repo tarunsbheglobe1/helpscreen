@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Center | Front Desk by eGlobe Solutions</title>
+<meta name="description" content="Video tutorials and written guides for rooms, reservations, allocation and hotel operations in Front Desk by eGlobe Solutions.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { --navy: #12304d; --blue: #1c68a8; --bright: #1e88e5; --line: #e3eaf3; --soft: #f4f8fc; --text: #475569; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font: 15px/1.75 Inter, Arial, sans-serif; color: var(--text); background: var(--soft); }
+h1, h2, h3 { font-family: Poppins, Arial, sans-serif; color: var(--navy); line-height: 1.35; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+:focus-visible { outline: 3px solid #f5b942; outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+.top { background: var(--blue); color: #fff; }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 62px; }
+.top strong { font: 600 16px Poppins, sans-serif; }
+.top a { font-size: 13.5px; border: 1px solid rgba(255,255,255,.4); border-radius: 8px; padding: 5px 14px; }
+
+.hero { background: linear-gradient(120deg, #12304d, #1c68a8 60%, #2387d6); color: #fff; text-align: center; padding: 54px 0 62px; }
+.hero h1 { color: #fff; font-size: clamp(28px, 4.5vw, 42px); }
+.hero p { max-width: 640px; margin: 10px auto 26px; opacity: .88; }
+.search { display: block; max-width: 620px; margin: 0 auto; }
+.search input { width: 100%; height: 54px; border: 0; border-radius: 14px; padding: 0 20px; color: var(--navy); box-shadow: 0 14px 34px rgba(5, 25, 45, .3); }
+.stats { margin-top: 18px; font-size: 13px; opacity: .85; }
+
+.chips { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: -28px; }
+.chips a { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; box-shadow: 0 8px 22px rgba(18, 48, 77, .08); transition: transform .2s, border-color .2s; }
+.chips a:hover { transform: translateY(-3px); border-color: var(--bright); }
+.chips b { display: block; font: 600 14px/1.4 Poppins, sans-serif; color: var(--navy); }
+.chips small { font-size: 12px; }
+
+.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 32px; align-items: start; padding-top: 38px; padding-bottom: 56px; }
+.side { position: sticky; top: 18px; max-height: calc(100vh - 36px); overflow-y: auto; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 12px; scrollbar-width: thin; }
+.side h2 { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); padding: 8px 10px 4px; }
+.side a { display: block; font-size: 13px; line-height: 1.5; padding: 7px 10px; border-radius: 8px; }
+.side a:hover { background: var(--soft); }
+.side a.active { background: #e8f3fd; color: var(--blue); font-weight: 600; }
+
+.section-title { font-size: 22px; margin: 0 0 16px; }
+.group { margin-bottom: 38px; }
+.topic { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-bottom: 22px; scroll-margin-top: 18px; }
+.topic-head { padding: 22px 26px 0; }
+.badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--blue); background: #e8f3fd; border-radius: 20px; padding: 2px 11px; margin-bottom: 10px; }
+.topic h3 { font-size: 19px; }
+.subtitle { font-size: 13px; font-weight: 600; color: var(--blue); margin-top: 4px; }
+.topic-body { padding: 14px 26px 24px; }
+.topic-body p { margin-bottom: 12px; }
+.topic-body strong { color: #1e3a56; }
+.topic-body h4 { font: 600 14px Poppins, sans-serif; color: var(--navy); margin: 18px 0 10px; }
+.topic-body ul { list-style: none; display: grid; gap: 8px; }
+.topic-body li { position: relative; padding-left: 30px; }
+.topic-body li::before { content: "✓"; position: absolute; left: 0; top: 4px; width: 19px; height: 19px; border-radius: 50%; background: var(--bright); color: #fff; font-size: 11px; line-height: 19px; text-align: center; }
+.topic-body .callout { margin-top: 16px; padding: 13px 16px; background: #eef6fe; border-left: 4px solid var(--bright); border-radius: 0 10px 10px 0; }
+
+.video { margin: 18px 26px 0; }
+.video button, .video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; overflow: hidden; }
+.video button { position: relative; cursor: pointer; background: linear-gradient(135deg, #1d4f7c, #2a8fdc); }
+.video img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border-radius: 50%; background: #fff; color: var(--blue); font-size: 24px; display: grid; place-items: center; padding-left: 5px; box-shadow: 0 8px 26px rgba(0,0,0,.35); transition: transform .2s; }
+.video button:hover .play { transform: translate(-50%, -50%) scale(1.1); }
+.yt { display: inline-block; margin-top: 8px; font-size: 12.5px; color: var(--bright); font-weight: 600; }
+
+.photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 18px; }
+.photos img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
+.sign { margin-top: 20px; padding-top: 14px; border-top: 1px dashed #dbe4ef; font-size: 13px; }
+.sign strong { display: block; font-family: Poppins, sans-serif; }
+.tags { margin-top: 8px; font-size: 12px; color: #4673a6; word-spacing: 6px; }
+
+.empty { text-align: center; padding: 70px 20px; background: #fff; border-radius: 14px; }
+footer { background: var(--navy); color: #cfe0ee; text-align: center; padding: 26px; font-size: 13px; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .chips { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .wrap { padding: 0 14px; }
+  .topic-head { padding: 18px 16px 0; }
+  .topic-body { padding: 12px 16px 20px; }
+  .video { margin: 14px 16px 0; }
+  .play { width: 52px; height: 52px; font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <strong>Front Desk by eGlobe Solutions</strong>
+    <a href="help-redesign.html">&larr; Back to Front Desk</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Help Center</h1>
+    <p>Video tutorials and step-by-step guides to help your team manage rooms, reservations and daily hotel operations.</p>
+    <label class="search">
+      <input type="search" id="search" placeholder="Search guides, for example: block rooms, stop sell, WhatsApp" aria-label="Search guides">
+    </label>
+    <div class="stats" id="stats" aria-live="polite"></div>
+  </div>
+</section>
+
+<nav class="wrap chips" id="chips" aria-label="Categories"></nav>
+
+<div class="wrap layout">
+  <aside class="side" id="side" aria-label="All guides"></aside>
+  <main>
+    <div id="content"></div>
+    <div class="empty" id="empty" hidden>No guides match your search. Try a different word.</div>
+  </main>
+</div>
+
+<footer>Front Desk by eGlobe Solutions &middot; Your key to success.</footer>
+
+<script src="help-data.js"></script>
+<script>
+const topicHTML = (t, cat) => `
+<article class="topic" id="${t.id}">
+  <div class="topic-head">
+    <span class="badge">${t.video ? 'Video guide' : 'Written guide'}</span>
+    <h3>${t.title}</h3>
+    ${t.subtitle ? `<div class="subtitle">${t.subtitle}</div>` : ''}
+  </div>
+  ${t.video ? `<div class="video">
+    <button data-video="${t.video}" aria-label="Play video: ${t.title}">
+      <img src="${ytThumb(t.video)}" alt="" loading="lazy" onerror="this.remove()">
+      <span class="play">&#9654;</span>
+    </button>
+    <a class="yt" href="${ytWatch(t.video)}" target="_blank" rel="noopener">Watch on YouTube &#8599;</a>
+  </div>` : ''}
+  <div class="topic-body">
+    ${t.intro}${t.more}
+    ${t.photos ? `<div class="photos">${t.photos.map(p => `<img src="${p.src}" alt="${p.alt}" loading="lazy">`).join('')}</div>` : ''}
+    ${t.brand ? `<div class="sign"><strong>${t.brand}</strong>${t.tagline}</div>` : ''}
+    ${t.tags ? `<div class="tags">${t.tags}</div>` : ''}
+  </div>
+</article>`;
+
+const grouped = HELP_CATEGORIES.map(c => ({ ...c, topics: HELP_TOPICS.filter(t => t.category === c.id) }));
+
+document.getElementById('content').innerHTML = grouped.map(c => `
+  <section class="group" id="cat-${c.id}">
+    <h2 class="section-title">${c.name}</h2>
+    ${c.topics.map(t => topicHTML(t, c)).join('')}
+  </section>`).join('');
+
+document.getElementById('chips').innerHTML = grouped.map(c =>
+  `<a href="#cat-${c.id}"><b>${c.name}</b><small>${c.topics.length} guides</small></a>`).join('');
+
+document.getElementById('side').innerHTML = grouped.map(c =>
+  `<div data-cat="${c.id}"><h2>${c.name}</h2>${c.topics.map(t => `<a href="#${t.id}">${t.title}</a>`).join('')}</div>`).join('');
+
+const videoCount = HELP_TOPICS.filter(t => t.video).length;
+const stats = document.getElementById('stats');
+const defaultStats = `${HELP_TOPICS.length} guides · ${videoCount} with video`;
+stats.textContent = defaultStats;
+
+/* Play video in place; only one plays at a time */
+let playing = null;
+const stopVideo = () => {
+  if (!playing) return;
+  playing.frame.replaceWith(playing.button);
+  playing = null;
+};
+document.getElementById('content').addEventListener('click', e => {
+  const button = e.target.closest('button[data-video]');
+  if (!button) return;
+  stopVideo();
+  const frame = ytFrame(button.dataset.video, button.getAttribute('aria-label'));
+  button.replaceWith(frame);
+  playing = { frame, button };
+});
+
+/* Search */
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value.trim().toLowerCase();
+  let total = 0;
+  stopVideo();
+  grouped.forEach(c => {
+    let count = 0;
+    c.topics.forEach(t => {
+      const el = document.getElementById(t.id);
+      const match = el.querySelector('h3').textContent.concat(' ', el.querySelector('.topic-body').textContent).toLowerCase().includes(q);
+      el.hidden = !match;
+      document.querySelector(`.side a[href="#${t.id}"]`).hidden = !match;
+      if (match) count++;
+    });
+    document.getElementById('cat-' + c.id).hidden = !count;
+    document.querySelector(`.side [data-cat="${c.id}"]`).hidden = !count;
+    total += count;
+  });
+  document.getElementById('empty').hidden = total > 0;
+  stats.textContent = q ? `${total} matching guide${total === 1 ? '' : 's'}` : defaultStats;
+});
+
+/* Highlight the guide being read in the side menu */
+const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (!entry.isIntersecting) return;
+  document.querySelectorAll('.side a').forEach(a => a.classList.toggle('active', a.hash === '#' + entry.target.id));
+}), { rootMargin: '-10% 0px -70% 0px' });
+document.querySelectorAll('.topic').forEach(el => observer.observe(el));
+
+/* Jump to a guide when arriving from a link such as help-center.html#stop-sell */
+if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+</script>
+</body>
+</html>
